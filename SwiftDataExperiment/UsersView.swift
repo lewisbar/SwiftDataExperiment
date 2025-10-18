@@ -13,22 +13,24 @@ struct UsersView: View {
     @Query var users: [User]
 
     var body: some View {
-        List(users) { user in
-            HStack {
-                Text(user.name)
+        List {
+            ForEach(users) { user in
+                HStack {
+                    Text(user.name)
 
-                Spacer()
+                    Spacer()
 
-                Text(String(user.unwrappedJobs.count))
-                    .fontWeight(.black)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 5)
-                    .background(.blue)
-                    .foregroundStyle(.white)
-                    .clipShape(.capsule)
+                    Text(String(user.unwrappedJobs.count))
+                        .fontWeight(.black)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 5)
+                        .background(.blue)
+                        .foregroundStyle(.white)
+                        .clipShape(.capsule)
+                }
             }
+            .onDelete(perform: deleteUser)
         }
-        .onAppear(perform: addSample)
     }
 
     init(minimumJoinDate: Date, sortOrder: [SortDescriptor<User>]) {
@@ -37,15 +39,11 @@ struct UsersView: View {
         }, sort: sortOrder)
     }
 
-    func addSample() {
-        let user1 = User(name: "Piper Chapman", city: "New York", joinDate: .now)
-        let job1 = Job(name: "Organize sock drawer", priority: 3)
-        let job2 = Job(name: "Make plans with Alex", priority: 4)
-
-        modelContext.insert(user1)
-
-        user1.jobs?.append(job1)
-        user1.jobs?.append(job2)
+    func deleteUser(_ indexSet: IndexSet) {
+        for index in indexSet {
+            let user = users[index]
+            modelContext.delete(user)
+        }
     }
 }
 
