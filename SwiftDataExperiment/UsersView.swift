@@ -15,21 +15,26 @@ struct UsersView: View {
     var body: some View {
         List {
             ForEach(users) { user in
-                HStack {
-                    Text(user.name)
+                NavigationLink(value: user) {
+                    HStack {
+                        Text(user.name)
 
-                    Spacer()
+                        Spacer()
 
-                    Text(String(user.unwrappedJobs.count))
-                        .fontWeight(.black)
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 5)
-                        .background(.blue)
-                        .foregroundStyle(.white)
-                        .clipShape(.capsule)
+                        Text(String(user.unwrappedJobs.count))
+                            .fontWeight(.black)
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 5)
+                            .background(.blue)
+                            .foregroundStyle(.white)
+                            .clipShape(.capsule)
+                    }
                 }
             }
             .onDelete(perform: deleteUser)
+        }
+        .navigationDestination(for: User.self) { user in
+            EditUserView(user: user)
         }
     }
 
