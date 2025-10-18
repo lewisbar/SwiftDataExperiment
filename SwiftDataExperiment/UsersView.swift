@@ -31,7 +31,7 @@ struct UsersView: View {
                     }
                 }
             }
-            .onDelete(perform: deleteUser)
+            .onDelete(perform: deleteUsers)
             .onMove(perform: moveUsers)
         }
     }
@@ -42,7 +42,7 @@ struct UsersView: View {
         }, sort: sortOrder)
     }
 
-    func deleteUser(_ indexSet: IndexSet) {
+    func deleteUsers(_ indexSet: IndexSet) {
         for index in indexSet {
             let user = users[index]
             modelContext.delete(user)
