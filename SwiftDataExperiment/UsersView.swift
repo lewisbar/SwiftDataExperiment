@@ -33,9 +33,6 @@ struct UsersView: View {
             }
             .onDelete(perform: deleteUser)
         }
-        .navigationDestination(for: User.self) { user in
-            EditUserView(user: user)
-        }
     }
 
     init(minimumJoinDate: Date, sortOrder: [SortDescriptor<User>]) {

@@ -56,6 +56,9 @@ struct ContentView: View {
                         }
                     }
                 }
+                .navigationDestination(for: User.self) { user in
+                    EditUserView(user: user)
+                }
         }
     }
 }
