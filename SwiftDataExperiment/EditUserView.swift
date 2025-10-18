@@ -24,7 +24,7 @@ struct EditUserView: View {
     do {
         let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
         let container = try ModelContainer(for: User.self, configurations: configuration)
-        let user = User(name: "A User", city: "Somewhere", joinDate: .now)
+        let user = User(name: "A User", city: "Somewhere", joinDate: .now, sortIndex: 0)
         return EditUserView(user: user)
             .modelContainer(container)
     } catch {

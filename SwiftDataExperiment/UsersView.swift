@@ -32,6 +32,7 @@ struct UsersView: View {
                 }
             }
             .onDelete(perform: deleteUser)
+            .onMove(perform: moveUsers)
         }
     }
 
@@ -46,6 +47,15 @@ struct UsersView: View {
             let user = users[index]
             modelContext.delete(user)
         }
+    }
+
+    func moveUsers(from indexSet: IndexSet, to destination: Int) {
+        var tempUsers = users.sorted(by: { $0.sortIndex < $1.sortIndex })
+        tempUsers.move(fromOffsets: indexSet, toOffset: destination)
+        for (index, user) in tempUsers.enumerated() {
+            user.sortIndex = index
+        }
+        try? self.modelContext.save()
     }
 }
 

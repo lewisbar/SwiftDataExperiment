@@ -14,14 +14,16 @@ class User {
     var city: String = "Unknown"
     var joinDate: Date = Date.now
     @Relationship(deleteRule: .cascade) var jobs: [Job]? = [Job]()
+    var sortIndex: Int = 0
 
     var unwrappedJobs: [Job] {
         jobs ?? []
     }
 
-    init(name: String, city: String, joinDate: Date) {
+    init(name: String, city: String, joinDate: Date, sortIndex: Int) {
         self.name = name
         self.city = city
         self.joinDate = joinDate
+        self.sortIndex = sortIndex
     }
 }

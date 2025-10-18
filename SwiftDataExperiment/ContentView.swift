@@ -12,11 +12,9 @@ struct ContentView: View {
     @Environment(\.modelContext) var modelContext
     @State private var showingUpcomingOnly = false
     @State private var path = [User]()
+    @Query var users: [User]
 
-    @State private var sortOrder = [
-        SortDescriptor(\User.name),
-        SortDescriptor(\User.joinDate)
-    ]
+    @State private var sortOrder = [SortDescriptor(\User.sortIndex)]
 
     var body: some View {
         NavigationStack(path: $path) {
@@ -24,7 +22,7 @@ struct ContentView: View {
                 .navigationTitle("Users")
                 .toolbar {
                     Button("Add User", systemImage: "plus") {
-                        let newUser = User(name: "", city: "", joinDate: .now)
+                        let newUser = User(name: "", city: "", joinDate: .now, sortIndex: users.count)
                         modelContext.insert(newUser)
                         path = [newUser]
                     }
